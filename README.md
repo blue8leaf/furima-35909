@@ -2,16 +2,16 @@
 
 ## usersテーブル
 
-| Column               | Type     | Options      |
-| -------------------- | -------- | ------------ |
-| nickname             | string   | null:false   |
-| email                | string   | unique: true |
-| encrypted_password   | string   | null:false   |
-| family_name_kanji    | string   | null:false   |
-| first_name_kanji     | string   | null:false   |
-| family_name_katakana | string   | null:false   |
-| first_name_katakana  | string   | null:false   |
-| birthday             | datetime | null:false   |
+| Column               | Type     | Options                   |
+| -------------------- | -------- | ------------------------- |
+| nickname             | string   | null:false                |
+| email                | string   | null: false, unique: true |
+| encrypted_password   | string   | null:false                |
+| family_name_kanji    | string   | null:false                |
+| first_name_kanji     | string   | null:false                |
+| family_name_katakana | string   | null:false                |
+| first_name_katakana  | string   | null:false                |
+| birthday             | date     | null:false                |
 
 - has_many :items
 - has_many :orders
@@ -22,8 +22,8 @@
 | ----------------- | ---------- | ----------------------------- |
 | item_name         | string     | null:false                    |
 | explanation       | text       | null:false                    |
-| Category_id       | integer    | null:false                    |
-| Status_id         | integer    | null:false                    |
+| category_id       | integer    | null:false                    |
+| status_id         | integer    | null:false                    |
 | delivery_price_id | integer    | null:false                    |
 | prefectures_id    | integer    | null:false                    |
 | send_day_id       | integer    | null:false                    |
