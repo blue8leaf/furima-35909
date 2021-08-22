@@ -2,26 +2,33 @@
 
 ## usersテーブル
 
-| Column     | Type   | Options    |
-| ---------- | ------ |            |
-| nickname   | string | null:false |
-| email      | string | null:false |
-| password   | string | null:false |
-| kanji      | string | null:false |
-| katakana   | string | null:false |
-| birthday   | string | null:false |
+| Column               | Type     | Options      |
+| -------------------- | -------- | ------------ |
+| nickname             | string   | null:false   |
+| email                | string   | unique: true |
+| encrypted_password   | string   | null:false   |
+| family_name_kanji    | string   | null:false   |
+| first_name_kanji     | string   | null:false   |
+| family_name_katakana | string   | null:false   |
+| first_name_katakana  | string   | null:false   |
+| birthday             | datetime | null:false   |
 
 - has_many :items
 - has_many :orders
 
 ## itemsテーブル
 
-| Column      | Type       | Options                       |
-| ----------- | ---------- | ----------------------------- |
-| item_name   | string     | null:false                    |
-| explanation | text       | null:false                    |
-| price       | integer    | null:false                    |
-| user        | references | null:false, foreign_key: true |
+| Column            | Type       | Options                       |
+| ----------------- | ---------- | ----------------------------- |
+| item_name         | string     | null:false                    |
+| explanation       | text       | null:false                    |
+| Category_id       | integer    | null:false                    |
+| Status_id         | integer    | null:false                    |
+| delivery_price_id | integer    | null:false                    |
+| prefectures_id    | integer    | null:false                    |
+| send_day_id       | integer    | null:false                    |
+| price             | integer    | null:false                    |
+| user              | references | null:false, foreign_key: true |
 
 - belongs_to :user
 - has_one :order
@@ -34,17 +41,19 @@
 | item   | references | null:false, foreign_key: true |
 
 - belongs_to :user
-- has_one :item
+- belongs_to :item
 - has_one :send
 
 ## sendsテーブル
 
-| Column           | Type    | Options    |
-| ---------------- | ------- | ---------- |
-| postal_code      | integer | null:false |
-| municipalities   | string  | null:false |
-| address          | string  | null:false |
-| building_name    | string  | null:false |
-| telephone_number | integer | null:false |
+| Column           | Type       | Options                       |
+| ---------------- | ---------- | ----------------------------- |
+| postal_code      | string     | null:false                    |
+| prefectures_id   | integer    | null:false                    |
+| municipalities   | string     | null:false                    |
+| address          | string     | null:false                    |
+| building_name    | string     |                               |
+| telephone_number | string     | null:false                    |
+| order            | references | null:false, foreign_key: true |
 
-- has_one :order
+- belongs_to :order
