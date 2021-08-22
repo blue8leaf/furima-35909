@@ -1,24 +1,50 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
 
-Things you may want to cover:
+| Column     | Type   | Options    |
+| ---------- | ------ |            |
+| nickname   | string | null:false |
+| email      | string | null:false |
+| password   | string | null:false |
+| kanji      | string | null:false |
+| katakana   | string | null:false |
+| birthday   | string | null:false |
 
-* Ruby version
+- has_many :items
+- has_many :orders
 
-* System dependencies
+## itemsテーブル
 
-* Configuration
+| Column      | Type       | Options                       |
+| ----------- | ---------- | ----------------------------- |
+| item_name   | string     | null:false                    |
+| explanation | text       | null:false                    |
+| price       | integer    | null:false                    |
+| user        | references | null:false, foreign_key: true |
 
-* Database creation
+- belongs_to :user
+- has_one :order
 
-* Database initialization
+## ordersテーブル
 
-* How to run the test suite
+| Column | Type       | Options                       |
+| ------ | ---------- | ----------------------------- |
+| user   | references | null:false, foreign_key: true |
+| item   | references | null:false, foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- has_one :item
+- has_one :send
 
-* Deployment instructions
+## sendsテーブル
 
-* ...
+| Column           | Type    | Options    |
+| ---------------- | ------- | ---------- |
+| postal_code      | integer | null:false |
+| municipalities   | string  | null:false |
+| address          | string  | null:false |
+| building_name    | string  | null:false |
+| telephone_number | integer | null:false |
+
+- has_one :order
