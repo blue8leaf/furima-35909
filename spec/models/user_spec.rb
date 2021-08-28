@@ -60,19 +60,19 @@ RSpec.describe User do
       it '英字のみのパスワードでは登録できない' do
         @user.password = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", 'Password is invalid')
       end
 
       it '数字のみのパスワードでは登録できない' do
         @user.password = '000000'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", 'Password is invalid')
       end
 
       it '全角文字を含むパスワードでは登録できない' do
         @user.password = '123AAA'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", 'Password is invalid')
       end
 
       it 'passwordとpassword_confirmationが不一致では登録できない' do
@@ -91,7 +91,7 @@ RSpec.describe User do
       it 'family_name_kanjiに半角文字が含まれていると登録できない' do
         @user.family_name_kanji = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family name kanji is invalid")
+        expect(@user.errors.full_messages).to include('Family name kanji is invalid')
       end
 
       it 'first_name_kanjiが空では登録できない' do
@@ -103,7 +103,7 @@ RSpec.describe User do
       it 'first_name_kanjiに半角文字が含まれていると登録できない' do
         @user.first_name_kanji = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kanji is invalid")
+        expect(@user.errors.full_messages).to include('First name kanji is invalid')
       end
 
       it 'family_name_katakanaが空では登録できない' do
@@ -115,7 +115,7 @@ RSpec.describe User do
       it 'family_name_katakanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
         @user.family_name_katakana = 'a1あい愛%'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family name katakana is invalid")
+        expect(@user.errors.full_messages).to include('Family name katakana is invalid')
       end
 
       it 'first_name_katakanaが空では登録できない' do
@@ -127,7 +127,7 @@ RSpec.describe User do
       it 'first_name_katakanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
         @user.first_name_katakana = 'a1あい愛%'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name katakana is invalid")
+        expect(@user.errors.full_messages).to include('First name katakana is invalid')
       end
 
       it 'birthdayが空では登録できない' do
