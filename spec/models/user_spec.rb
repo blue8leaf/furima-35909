@@ -7,13 +7,13 @@ RSpec.describe User do
 
   describe 'ユーザー新規登録' do
     context '新規登録できる場合' do
-      it 'nickname、email、password、password_confirmation、family_name_kanji、first_name_kanji、family_name_katakana、first_name_katakana、birthdayが存在すれば登録できる' do
+      it '全ての項目の入力が存在すれば登録できること' do
         expect(@user).to be_valid
       end
 
       it 'passwordが6文字以上であれば登録できる' do
-        @user.password = '123456'
-        @user.password_confirmation = '123456'
+        @user.password = '123abc'
+        @user.password_confirmation = '123abc'
         expect(@user).to be_valid
       end
     end
@@ -57,15 +57,27 @@ RSpec.describe User do
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
 
-      it 'パスワードに半角英数字混合での入力がない場合登録できない' do
-        @user.password = 'aaa000'
+      it '英字のみのパスワードでは登録できない' do
+        @user.password = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+      end
+
+      it '数字のみのパスワードでは登録できない' do
+        @user.password = '000000'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+      end
+
+      it '全角文字を含むパスワードでは登録できない' do
+        @user.password = '123AAA'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
       end
 
       it 'passwordとpassword_confirmationが不一致では登録できない' do
-        @user.password = '123456'
-        @user.password_confirmation = '1234567'
+        @user.password = '123abc'
+        @user.password_confirmation = '123abcd'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
@@ -76,10 +88,22 @@ RSpec.describe User do
         expect(@user.errors.full_messages).to include("Family name kanji can't be blank")
       end
 
+      it 'family_name_kanjiに半角文字が含まれていると登録できない' do
+        @user.family_name_kanji = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kanji is invalid")
+      end
+
       it 'first_name_kanjiが空では登録できない' do
         @user.first_name_kanji = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kanji can't be blank")
+      end
+
+      it 'first_name_kanjiに半角文字が含まれていると登録できない' do
+        @user.first_name_kanji = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kanji is invalid")
       end
 
       it 'family_name_katakanaが空では登録できない' do
@@ -88,10 +112,22 @@ RSpec.describe User do
         expect(@user.errors.full_messages).to include("Family name katakana can't be blank")
       end
 
+      it 'family_name_katakanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
+        @user.family_name_katakana = 'a1あい愛%'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name katakana is invalid")
+      end
+
       it 'first_name_katakanaが空では登録できない' do
         @user.first_name_katakana = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First name katakana can't be blank")
+      end
+
+      it 'first_name_katakanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
+        @user.first_name_katakana = 'a1あい愛%'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name katakana is invalid")
       end
 
       it 'birthdayが空では登録できない' do
