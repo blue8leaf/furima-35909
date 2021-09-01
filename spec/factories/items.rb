@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :item do
-    item_name{ Faker::Lorem.sentence }
+    item_name { Faker::Lorem.sentence }
     explanation { Faker::Lorem.sentence }
     category_id { Category.find_by(name: 'レディース').id }
     status_id { Status.find_by(name: '新品・未使用').id }
@@ -8,7 +8,7 @@ FactoryBot.define do
     prefectures_id { Prefectures.find_by(name: '北海道').id }
     send_day_id { SendDay.find_by(name: '1~2日で発送').id }
     price { 300 }
-    association :user 
+    association :user
 
     after(:build) do |item|
       item.image.attach(io: File.open('public/images/test_image.png'), filename: 'test_image.png')
