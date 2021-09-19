@@ -6,7 +6,7 @@ RSpec.describe OrderAddress, type: :model do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
       @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
-      sleep 0.1  
+      sleep 0.1
     end
 
     context '商品購入ができる場合' do
@@ -19,7 +19,7 @@ RSpec.describe OrderAddress, type: :model do
       end
     end
 
-    context '商品購入ができない場合' do 
+    context '商品購入ができない場合' do
       it '郵便番号がないと保存できない' do
         @order_address.postal_code = ''
         @order_address.valid?
@@ -28,7 +28,7 @@ RSpec.describe OrderAddress, type: :model do
       it '郵便番号は3桁ハイフン4桁の半角文字列のみでないと保存できない' do
         @order_address.postal_code = '1234567'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postal code is invalid")
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid')
       end
       it '都道府県がないと保存できない' do
         @order_address.prefectures_id = ''
@@ -53,7 +53,7 @@ RSpec.describe OrderAddress, type: :model do
       it '電話番号は10桁以上11桁以内の半角数値のみでないと保存できない' do
         @order_address.telephone_number = '123456789'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Telephone number is invalid")
+        expect(@order_address.errors.full_messages).to include('Telephone number is invalid')
       end
       it 'userが紐付いていないと保存できないこと' do
         @order_address.user_id = nil
@@ -65,7 +65,7 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Item can't be blank")
       end
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @order_address.token = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
