@@ -42,16 +42,16 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one :send
+- has_one :address
 
-## sendsテーブル
+## addressesテーブル
 
 | Column           | Type       | Options                       |
 | ---------------- | ---------- | ----------------------------- |
 | postal_code      | string     | null:false                    |
 | prefectures_id   | integer    | null:false                    |
 | municipalities   | string     | null:false                    |
-| address          | string     | null:false                    |
+| house_number     | string     | null:false                    |
 | building_name    | string     |                               |
 | telephone_number | string     | null:false                    |
 | order            | references | null:false, foreign_key: true |
